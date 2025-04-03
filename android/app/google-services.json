@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "645495574707",
+    "project_id": "landslide-guardian",
+    "storage_bucket": "landslide-guardian.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645495574707:android:03f34d27e51575800a20c6",
+        "android_client_info": {
+          "package_name": "com.example.landslide_guardian"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA97KjEKOITVMRXoijsihCwLGJaLB4X0Ss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
