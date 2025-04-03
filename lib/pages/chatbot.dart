@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:landslide_guardian/api_services/api_service.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class ChatbotUI extends StatefulWidget {
   const ChatbotUI({super.key});
@@ -9,9 +11,10 @@ class ChatbotUI extends StatefulWidget {
 
 class _ChatbotUIState extends State<ChatbotUI> {
   final TextEditingController _messageController = TextEditingController();
+  bool isLoading = false;
   final List<Map<String, String>> _messages = [
-    {'message': 'hai!', 'type': 'bot'},
-    {'message': 'Hello, how can I help you', 'type': 'bot'},
+    // {'message': 'hai!', 'type': 'bot'},
+    // {'message': 'Hello, how can I help you', 'type': 'bot'},
   ];
 
   @override
@@ -46,7 +49,7 @@ class _ChatbotUIState extends State<ChatbotUI> {
                 ],
               ),
             ),
-            
+
             // Chat messages
             Expanded(
               child: ListView.builder(
@@ -55,7 +58,9 @@ class _ChatbotUIState extends State<ChatbotUI> {
                 itemBuilder: (context, index) {
                   final message = _messages[index];
                   return Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: _messages[index]["type"] == "bot"
+                        ? Alignment.centerLeft
+                        : Alignment.centerRight,
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 8.0),
                       padding: const EdgeInsets.symmetric(
@@ -63,13 +68,17 @@ class _ChatbotUIState extends State<ChatbotUI> {
                         vertical: 10.0,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFE5D6C6),
+                        color: _messages[index]["type"] == "bot"
+                            ? const Color(0xFFE5D6C6)
+                            : const Color.fromARGB(255, 71, 56, 40),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
                         message['message']!,
-                        style: const TextStyle(
-                          color: Colors.black87,
+                        style: TextStyle(
+                          color: _messages[index]["type"] == "bot"
+                              ? Colors.black87
+                              : Colors.white,
                           fontSize: 16,
                         ),
                       ),
@@ -78,7 +87,29 @@ class _ChatbotUIState extends State<ChatbotUI> {
                 },
               ),
             ),
-            
+
+            if (isLoading == true)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: LoadingIndicator(
+                    indicatorType: Indicator.lineScalePulseOutRapid,
+                    colors: const [
+                      Colors.red,
+                      Colors.orange,
+                      Colors.yellow,
+                      Colors.green,
+                      Colors.blue,
+                      Colors.indigo,
+                      Colors.purple,
+                    ],
+                    strokeWidth: 2,
+                  ),
+                ),
+              ),
+
             // Message input
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -110,14 +141,27 @@ class _ChatbotUIState extends State<ChatbotUI> {
                         Icons.arrow_forward,
                         color: Colors.black87,
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_messageController.text.isNotEmpty) {
+                          final String message = _messageController.text;
+
                           setState(() {
-                            _messages.add({
-                              'message': _messageController.text,
-                              'type': 'user'
-                            });
                             _messageController.clear();
+                            isLoading = true;
+                            _messages.add({'message': message, 'type': "user"});
+                          });
+                          String reply =
+                              await ApiService().sendMessageToGemini(message);
+                          print("Reply :$reply");
+
+                          if (reply.isNotEmpty) {
+                            _messages.add({
+                              'message': reply,
+                              'type': "bot",
+                            });
+                          }
+                          setState(() {
+                            isLoading = false;
                           });
                         }
                       },
