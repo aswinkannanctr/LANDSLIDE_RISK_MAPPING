@@ -49,7 +49,7 @@ class MapPage extends StatelessWidget {
                     size: 28,
                   ),
                   onPressed: () {
-                    Navigator.push(context,MaterialPageRoute(builder: (context)=>GoogleMapFlutter()));
+                    // Navigator.push(context,MaterialPageRoute(builder: (context)=>GoogleMapFlutter()));
                   },
                 ),
               ),

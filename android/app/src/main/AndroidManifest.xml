@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<uses-permission android:name="android.permission.CALL_PHONE"/>
+
     <application
         android:label="landslide_guardian"
         android:name="${applicationName}"
@@ -35,7 +37,7 @@
         <!-- Secure API Key Reference (DO NOT Hardcode API Keys) -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${MAPS_API_KEY}"/>
+            android:value="AIzaSyAfXVBMieIjbRu9UKePVsgLnP6shzT8oRs"/>
 
         <!-- Enable Hybrid Composition for Google Maps -->
         <meta-data
@@ -49,6 +51,10 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+            <data android:scheme="tel" />
         </intent>
     </queries>
 </manifest>

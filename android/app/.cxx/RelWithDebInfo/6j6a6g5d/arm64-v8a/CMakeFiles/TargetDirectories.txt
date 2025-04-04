@@ -1,0 +1,2 @@
+/home/ajs/Flutter Projects/LANDSLIDE_RISK_MAPPING/android/app/.cxx/RelWithDebInfo/6j6a6g5d/arm64-v8a/CMakeFiles/edit_cache.dir
+/home/ajs/Flutter Projects/LANDSLIDE_RISK_MAPPING/android/app/.cxx/RelWithDebInfo/6j6a6g5d/arm64-v8a/CMakeFiles/rebuild_cache.dir

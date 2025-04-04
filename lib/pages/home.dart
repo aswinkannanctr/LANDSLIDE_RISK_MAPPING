@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:landslide_guardian/pages/chatbot.dart';
+import 'package:landslide_guardian/pages/data.dart';
 import 'package:landslide_guardian/pages/map.dart';
+import 'package:landslide_guardian/pages/weather_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Homeui extends StatelessWidget {
   const Homeui({super.key});
@@ -47,22 +50,28 @@ class Homeui extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         _buildFeatureButton(
-                          context: context,
-                          icon: Icons.chat_bubble_outline,
-                          label: 'chatbot',
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const ChatbotUI()),
-                            );
-                          }
-                        ),
+                            context: context,
+                            icon: Icons.chat_bubble_outline,
+                            label: 'chatbot',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ChatbotUI()),
+                              );
+                            }),
                         const SizedBox(width: 16),
                         _buildFeatureButton(
-                          context: context,
-                          icon: Icons.data_usage,
-                          label: 'data',
-                        ),
+                            context: context,
+                            icon: Icons.data_usage,
+                            label: 'data',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const DatasPage()),
+                              );
+                            }),
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -71,32 +80,45 @@ class Homeui extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         _buildFeatureButton(
-                          context: context,
-                          icon: Icons.map_outlined,
-                          label: 'map',
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const MapPage()),
-                            );
-                          }
-                        ),
+                            context: context,
+                            icon: Icons.map_outlined,
+                            label: 'map',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const MapPage()),
+                              );
+                            }),
                         const SizedBox(width: 16),
                         _buildFeatureButton(
-                          context: context,
-                          icon: Icons.cloud_outlined,
-                          label: 'weather',
-                        ),
+                            context: context,
+                            icon: Icons.cloud_outlined,
+                            label: 'weather',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => WeatherScreen()),
+                              );
+                            }),
                       ],
                     ),
                     const SizedBox(height: 16),
                     // Emergency call button
                     _buildFeatureButton(
-                      context: context,
-                      icon: Icons.phone,
-                      label: 'emergency call',
-                      width: 200,
-                    ),
+                        context: context,
+                        icon: Icons.phone,
+                        label: 'emergency call',
+                        width: 200,
+                        onTap: () async {
+                          final Uri phoneUri = Uri.parse("tel:9876543210");
+                          if (await canLaunchUrl(phoneUri)) {
+                            await launchUrl(phoneUri);
+                          } else {
+                            throw "Could not launch number";
+                          }
+                        }),
                   ],
                 ),
               ),
